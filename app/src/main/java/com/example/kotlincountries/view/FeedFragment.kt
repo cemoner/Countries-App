@@ -1,4 +1,4 @@
-package com.example.kotlincountries
+package com.example.kotlincountries.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import com.example.kotlincountries.R
 
 class FeedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
