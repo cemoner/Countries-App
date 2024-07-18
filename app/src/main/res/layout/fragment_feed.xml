@@ -10,13 +10,13 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.FeedFragment">
+        tools:context=".view.fragments.FeedFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/feed_constraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".view.FeedFragment">
+            tools:context=".view.fragments.FeedFragment">
 
 
 
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/error"
+                android:id="@+id/countryError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Error! Try Again"

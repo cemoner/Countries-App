@@ -7,7 +7,7 @@
         android:id="@+id/country_relative"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.CountryFragment">
+        tools:context=".view.fragments.CountryFragment">
 
         <ImageView
             android:id="@+id/flagImage"

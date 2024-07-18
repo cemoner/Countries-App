@@ -1,4 +1,4 @@
-package com.example.kotlincountries.view
+package com.example.kotlincountries.view.fragments
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
