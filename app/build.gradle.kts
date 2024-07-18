@@ -54,4 +54,5 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.glide)
     implementation(libs.androidx.preference)
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
