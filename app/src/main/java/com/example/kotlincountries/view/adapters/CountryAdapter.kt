@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlincountries.R
 import com.example.kotlincountries.model.entities.Country
+import com.example.kotlincountries.util.downloadFromUrl
+import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.view.fragments.FeedFragmentDirections
 
 class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
@@ -33,6 +36,10 @@ class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<Co
             val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment()
             Navigation.findNavController(it).navigate(action )
         }
+
+        holder.itemView.findViewById<ImageView>(R.id.countryImage).downloadFromUrl(countryList[position].imageUrl,
+            placeHolderProgressBar(holder.itemView.context)
+        )
     }
 
     fun updateCountryList(newCountryList:List<Country>){

@@ -11,6 +11,8 @@ class CountryViewModel:ViewModel() {
     fun getDataFromRoom(){
         val country = Country("Turkey","Ankara","Asia","TRY","www.ss.com","Turkish")
             countryLiveData.value = country
+
+        println()
     }
 
 }
