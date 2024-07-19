@@ -37,9 +37,7 @@ class FeedViewModel:ViewModel() {
                     countryError.value = true
                     e.printStackTrace()
                 }
-
             })
-
         )
     }
 }
