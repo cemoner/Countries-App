@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.transition.Visibility
 import com.example.kotlincountries.R
 import com.example.kotlincountries.view.adapters.CountryAdapter
 import com.example.kotlincountries.viewmodels.FeedViewModel
@@ -45,12 +47,19 @@ class FeedFragment : Fragment() {
         val countryError = view.findViewById<TextView>(R.id.countryError)
         val countryLoading = view.findViewById<ProgressBar>(R.id.countryLoading)
 
-        Log.d("FeedFragment", "countryList is null: ${countryList == null}")
-        Log.d("FeedFragment", "countryError is null: ${countryError == null}")
-        Log.d("FeedFragment", "countryLoading is null: ${countryLoading == null}")
 
         countryList.layoutManager = LinearLayoutManager(context)
         countryList.adapter = countryAdapter
+
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            countryList.visibility = View.GONE
+            countryError.visibility = View.GONE
+            countryLoading.visibility = View.VISIBLE
+            viewModel.refreshData()
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         observeLiveData(countryList,countryError,countryLoading)
     }
