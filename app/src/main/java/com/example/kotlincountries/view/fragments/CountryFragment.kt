@@ -5,15 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlincountries.R
+import com.example.kotlincountries.util.downloadFromUrl
+import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.viewmodels.CountryViewModel
 
 class CountryFragment : Fragment() {
 
     private lateinit var viewModel:CountryViewModel
+    private var countryID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +34,13 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            countryID = CountryFragmentArgs.fromBundle(it).countryID
+        }
+
+
         viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
-        viewModel.getDataFromRoom()
+        viewModel.getDataFromRoom(countryID)
 
         observeLiveData(view)
     }
@@ -44,6 +53,9 @@ class CountryFragment : Fragment() {
                 view.findViewById<TextView>(R.id.countryCapital).text = it.countryCapital
                 view.findViewById<TextView>(R.id.countryCurrency).text = it.countryCurrency
                 view.findViewById<TextView>(R.id.countryLanguage).text = it.countryLanguage
+                view.findViewById<ImageView>(R.id.flagImage).downloadFromUrl(it.imageUrl,
+                    placeHolderProgressBar(view.context)
+                )
             }
         })
     }
