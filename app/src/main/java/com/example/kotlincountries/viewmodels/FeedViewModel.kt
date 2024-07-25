@@ -69,7 +69,6 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
             println("storeInSQLite Print Line")
             val db = CountryDatabase.getInstance(getApplication())
             val dao = db.getCountryDao()
-            println("hello")
             dao.deleteAllCountries()
             val listLong = dao.insertAll(*countries.toTypedArray())
             var i = 0

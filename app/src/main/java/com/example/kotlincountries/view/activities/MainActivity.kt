@@ -1,4 +1,4 @@
-package com.example.kotlincountries.view.Activities
+package com.example.kotlincountries.view.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

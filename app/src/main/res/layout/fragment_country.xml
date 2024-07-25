@@ -3,6 +3,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="selectedCountry"
+            type="com.example.kotlincountries.model.entities.Country" />
+    </data>
+
     <RelativeLayout
         android:id="@+id/country_relative"
         android:layout_width="match_parent"
@@ -16,14 +24,14 @@
             android:layout_alignParentTop="true"
             android:layout_marginVertical="50dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher"
+            android:downloadUrl="@{selectedCountry.imageUrl}"
             android:minHeight="200dp"/>
         <TextView
             android:id="@+id/countryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/flagImage"
-            android:text="Country Name"
+            android:text="@{selectedCountry.countryName}"
             android:padding="5dp"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -34,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/countryName"
-            android:text="Country Capital"
+            android:text="@{selectedCountry.countryCapital}"
             android:padding="5dp"
             android:textSize="22.5sp"
             android:layout_marginBottom="15dp"
@@ -44,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/countryCapital"
-            android:text="Country Region"
+            android:text="@{selectedCountry.countryRegion}"
             android:padding="5dp"
             android:textSize="20sp"
             android:layout_marginBottom="15dp"
@@ -55,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/countryRegion"
-            android:text="Country Currency"
+            android:text="@{selectedCountry.countryCurrency}"
             android:padding="5dp"
             android:textSize="20sp"
             android:layout_marginBottom="15dp"
@@ -66,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/countryCurrency"
-            android:text="Country Language"
+            android:text="@{selectedCountry.countryLanguage}"
             android:padding="5dp"
             android:textSize="20sp"
             android:layout_centerHorizontal="true"/>

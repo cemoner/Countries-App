@@ -26,6 +26,7 @@ data class Country(
     @ColumnInfo(name = "language")
     @SerializedName("language")
     val countryLanguage: String?
+
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid:Int = 0

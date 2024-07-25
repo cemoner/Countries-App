@@ -1,44 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginBottom="20dp">
+    
+    <data>
+        <variable
+            name="country"
+            type="com.example.kotlincountries.model.entities.Country" />
+        <variable
+            name="listener"
+            type="com.example.kotlincountries.view.adapters.CountryClickListener"/>
+    </data>
 
-    <ImageView
-        android:id="@+id/countryImage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:src="@mipmap/ic_launcher"/>
 
+    
     <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:orientation="vertical"
-        android:layout_weight="4"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/countryName"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Name"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:onClick="@{listener::onCountryClicked}"
+        android:layout_marginBottom="20dp">
 
-        </TextView>
         <TextView
-            android:id="@+id/countryRegion"
+             android:id="@+id/countryUuidText"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:visibility="gone"
+             android:text="@{String.valueOf(country.uuid)}"/>
+        <ImageView
+            android:id="@+id/countryImage"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="15sp"
-            android:text="Region"
-            android:padding="5dp">
+            android:layout_weight="3"
+            android:downloadUrl="@{country.imageUrl}"/>
 
-        </TextView>
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/countryName"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@{country.countryName}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:padding="5dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/countryRegion"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="15sp"
+                android:text="@{country.countryRegion}"
+                android:padding="5dp">
+
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </layout>
