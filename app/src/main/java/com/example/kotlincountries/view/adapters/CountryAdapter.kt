@@ -34,19 +34,6 @@ class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<Co
 
         holder.countryBinding.country = countryList[position]
         holder.countryBinding.listener = this
-
-        /*
-        holder.itemView.findViewById<TextView>(R.id.countryName).text = countryList[position].countryName
-        holder.itemView.findViewById<TextView>(R.id.countryRegion).text = countryList[position].countryRegion
-
-        holder.itemView.setOnClickListener{
-
-        }
-
-        holder.itemView.findViewById<ImageView>(R.id.countryImage).downloadFromUrl(countryList[position].imageUrl,
-            placeHolderProgressBar(holder.itemView.context)
-        )
-         */
     }
 
     @SuppressLint("NotifyDataSetChanged")
