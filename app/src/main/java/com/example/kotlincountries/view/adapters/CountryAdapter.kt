@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlincountries.R
@@ -15,8 +16,10 @@ import com.example.kotlincountries.model.entities.Country
 import com.example.kotlincountries.util.downloadFromUrl
 import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.view.fragments.FeedFragmentDirections
+import com.example.kotlincountries.viewmodels.FeedViewModel
+import com.google.android.material.snackbar.Snackbar
 
-class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<CountryAdapter.CountryViewHolder>(),CountryClickListener {
+class CountryAdapter(val countryList:ArrayList<Country>,val viewModel: FeedViewModel):RecyclerView.Adapter<CountryAdapter.CountryViewHolder>(),CountryClickListener {
 
     inner class CountryViewHolder(var countryBinding: CountryItemBinding):RecyclerView.ViewHolder(countryBinding.root)
 
@@ -31,7 +34,6 @@ class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<Co
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-
         holder.countryBinding.country = countryList[position]
         holder.countryBinding.listener = this
     }
@@ -43,9 +45,17 @@ class CountryAdapter(val countryList:ArrayList<Country>):RecyclerView.Adapter<Co
         notifyDataSetChanged()
     }
 
-    override fun onCountryClicked(view: View) {
-        val uuid = view.findViewById<TextView>(R.id.countryUuidText).text.toString().toInt()
+    override fun onCountryClicked(view: View,country: Country) {
+        val uuid = country.uuid
         val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment(uuid)
         Navigation.findNavController(view).navigate(action)
+    }
+
+    override fun onDeleteClicked(view: View,country: Country) {
+        val uuid = country.uuid
+        Snackbar.make(view,"Do you want to delete ${country.countryName}?",Snackbar.LENGTH_LONG).setAction("Yes"){
+            viewModel.deleteCountry(uuid)
+            Snackbar.make(it,"Deletion is Succesful!",Snackbar.LENGTH_SHORT).show()
+        }.show()
     }
 }

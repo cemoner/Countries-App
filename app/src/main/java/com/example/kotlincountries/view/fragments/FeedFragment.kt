@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -17,14 +18,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.transition.Visibility
 import com.example.kotlincountries.R
+import com.example.kotlincountries.databinding.FragmentFeedBinding
 import com.example.kotlincountries.view.adapters.CountryAdapter
 import com.example.kotlincountries.viewmodels.FeedViewModel
 
 class FeedFragment : Fragment() {
 
     private lateinit var viewModel:FeedViewModel
-    private val countryAdapter = CountryAdapter(arrayListOf())
-
+    private lateinit var countryAdapter:CountryAdapter
+    private lateinit var dataBinding:FragmentFeedBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -34,14 +36,19 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_feed, container, false)
+
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
+        countryAdapter= CountryAdapter(arrayListOf(),viewModel)
         viewModel.refreshData()
+
+        dataBinding.viewModel = viewModel
 
         val countryList = view.findViewById<RecyclerView>(R.id.countryList)
         val countryError = view.findViewById<TextView>(R.id.countryError)
@@ -57,7 +64,7 @@ class FeedFragment : Fragment() {
             countryList.visibility = View.GONE
             countryError.visibility = View.GONE
             countryLoading.visibility = View.VISIBLE
-            viewModel.refreshFromAPI()
+            viewModel.refreshData()
             swipeRefreshLayout.isRefreshing = false
         }
 

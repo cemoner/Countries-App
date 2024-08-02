@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    
     <data>
         <variable
             name="country"
@@ -10,28 +10,21 @@
             name="listener"
             type="com.example.kotlincountries.view.adapters.CountryClickListener"/>
     </data>
-
-
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:onClick="@{listener::onCountryClicked}"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-             android:id="@+id/countryUuidText"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:visibility="gone"
-             android:text="@{String.valueOf(country.uuid)}"/>
+        android:layout_marginBottom="50dp">
         <ImageView
             android:id="@+id/countryImage"
+            android:onClick="@{(theView) -> listener.onCountryClicked(theView,country)}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:downloadUrl="@{country.imageUrl}"/>
+            android:downloadUrl="@{country.imageUrl}">
+
+        </ImageView>
 
         <LinearLayout
             android:layout_height="match_parent"
@@ -44,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="@{country.countryName}"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:padding="5dp">
 
@@ -55,9 +48,19 @@
                 android:layout_width="wrap_content"
                 android:textSize="15sp"
                 android:text="@{country.countryRegion}"
+
                 android:padding="5dp">
 
             </TextView>
         </LinearLayout>
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/deleteIcon"
+            android:onClick="@{(theView) -> listener.onDeleteClicked(theView,country)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/delete_icon" />
     </LinearLayout>
 </layout>

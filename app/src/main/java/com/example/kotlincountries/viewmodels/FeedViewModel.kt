@@ -1,12 +1,16 @@
 package com.example.kotlincountries.viewmodels
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
 import com.example.kotlincountries.model.entities.Country
 import com.example.kotlincountries.services.CountryAPIService
 import com.example.kotlincountries.services.CountryDatabase
 import com.example.kotlincountries.util.CustomSharedPreferences
+import com.example.kotlincountries.view.fragments.FeedFragmentDirections
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +25,7 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
     private val api = CountryAPIService()
     private val disposable = CompositeDisposable()
     private var customSharedPreferences = CustomSharedPreferences(getApplication())
-    private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
+    private var refreshTime = 20 * 60 * 1000 * 1000 * 1000L
 
     fun refreshData() {
         val updateTime = customSharedPreferences.getTime()
@@ -96,5 +100,20 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
     override fun onCleared() {
         super.onCleared()
         disposable.clear()
+    }
+
+    @SuppressLint("CheckResult")
+    fun deleteCountry(id:Int) {
+        launch{
+            val db = CountryDatabase.getInstance(getApplication())
+            val dao = db.getCountryDao()
+            dao.deleteCountry(id)
+            refreshData()
+        }
+    }
+
+    fun navigateToAddFragment(view:View) {
+        val action = FeedFragmentDirections.actionFeedFragmentToAddFragment()
+        Navigation.findNavController(view).navigate(action)
     }
 }

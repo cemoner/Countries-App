@@ -18,4 +18,7 @@ class CountryAPIService {
         .create(CountryAPI::class.java)
 
     fun getData(): Single<List<Country>> = api.getCountries()
+
+    fun deleteCountry(id: Int): Single<Unit> = api.deleteCountry(id)
+
 }

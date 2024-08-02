@@ -4,82 +4,153 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
         <variable
             name="selectedCountry"
             type="com.example.kotlincountries.model.entities.Country" />
+        <variable
+            name="viewModel"
+            type="com.example.kotlincountries.viewmodels.CountryViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/country_relative"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/country_constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.fragments.CountryFragment">
 
         <ImageView
             android:id="@+id/flagImage"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginVertical="50dp"
-            android:scaleType="fitCenter"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:downloadUrl="@{selectedCountry.imageUrl}"
-            android:minHeight="200dp"/>
-        <TextView
-            android:id="@+id/countryName"
+            android:minHeight="150dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/countryNameInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryNameInputLayout"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/countryCapitalInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flagImage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country Name"
+                android:padding="10dp"
+                android:text="@{selectedCountry.countryName}"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryCapitalInputLayout"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/countryRegionInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryNameInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/capitalEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country Capital"
+                android:padding="10dp"
+                android:text="@{selectedCountry.countryCapital}"
+                android:textSize="17.5sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryRegionInputLayout"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/countryCurrencyInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryCapitalInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country Region"
+                android:padding="10dp"
+                android:text="@{selectedCountry.countryRegion}"
+                android:textSize="17.5sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryCurrencyInputLayout"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/countryLanguageInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryRegionInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/currencyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country Currency"
+                android:padding="10dp"
+                android:text="@{selectedCountry.countryCurrency}"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryLanguageInputLayout"
+            android:layout_width="371dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/updateButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryCurrencyInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/languageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country Language"
+                android:padding="10dp"
+                android:text="@{selectedCountry.countryLanguage}"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/updateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/flagImage"
-            android:text="@{selectedCountry.countryName}"
-            android:padding="5dp"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="15dp"
-            android:layout_centerHorizontal="true"/>
-        <TextView
-            android:id="@+id/countryCapital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/countryName"
-            android:text="@{selectedCountry.countryCapital}"
-            android:padding="5dp"
-            android:textSize="22.5sp"
-            android:layout_marginBottom="15dp"
-            android:layout_centerHorizontal="true"/>
-        <TextView
-            android:id="@+id/countryRegion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/countryCapital"
-            android:text="@{selectedCountry.countryRegion}"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:layout_marginBottom="15dp"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginTop="12dp"
+            android:text="Update"
+            android:onClick="@{() -> viewModel.updateCountry(nameEditText.getText().toString(),capitalEditText.getText().toString(),regionEditText.getText().toString(),currencyEditText.getText().toString(),languageEditText.getText().toString(),updateButton)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/countryLanguageInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countryLanguageInputLayout" />
 
-        <TextView
-            android:id="@+id/countryCurrency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/countryRegion"
-            android:text="@{selectedCountry.countryCurrency}"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:layout_marginBottom="15dp"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/countryLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/countryCurrency"
-            android:text="@{selectedCountry.countryLanguage}"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"/>
-
-
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

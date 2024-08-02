@@ -26,5 +26,17 @@
         <action
             android:id="@+id/action_feedFragment_to_countryFragment"
             app:destination="@id/countryFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.kotlincountries.view.fragments.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
 </navigation>

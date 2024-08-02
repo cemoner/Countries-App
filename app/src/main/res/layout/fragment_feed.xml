@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!-- Declare your variables here -->
+        <variable
+            name="viewModel"
+            type="com.example.kotlincountries.viewmodels.FeedViewModel" />
     </data>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -19,7 +21,6 @@
             tools:context=".view.fragments.FeedFragment">
 
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/countryList"
                 android:layout_width="0dp"
@@ -27,9 +28,9 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="1dp"
-                android:paddingTop="20dp"
-                android:paddingHorizontal="5dp"
                 android:layout_marginBottom="1dp"
+                android:paddingHorizontal="5dp"
+                android:paddingTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +53,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="325dp"
+                android:layout_marginTop="650dp"
+                android:clickable="true"
+                android:onClick="@{(theView) -> viewModel.navigateToAddFragment(theView)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

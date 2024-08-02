@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable name="viewModel"
+            type="com.example.kotlincountries.viewmodels.AddViewModel"/>
+    </data>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.fragments.AddFragment"
+        >
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/capitalInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/capitalInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/regionInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/capitalEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Capital" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regionInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/currencyInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/capitalInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/regionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Region" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/currencyInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/languageInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/regionInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/currencyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Currency" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/languageInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+
+            android:layout_marginEnd="35dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currencyInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/languageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Language" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/imageInputLayout"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/languageInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/imageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Image URL" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="58dp"
+            android:text="Add Country"
+            android:onClick="@{() -> viewModel.addCountry(nameEditText.getText().toString(),capitalEditText.getText().toString(),regionEditText.getText().toString(),currencyEditText.getText().toString(),languageEditText.getText().toString(),imageEditText.getText().toString(),button)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageInputLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

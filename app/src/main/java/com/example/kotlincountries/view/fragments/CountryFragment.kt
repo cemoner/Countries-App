@@ -44,6 +44,7 @@ class CountryFragment : Fragment() {
 
 
         viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+        dataBinding.viewModel = viewModel
         viewModel.getDataFromRoom(countryID)
 
         observeLiveData(view)

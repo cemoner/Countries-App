@@ -13,6 +13,8 @@ interface CountryDao {
     @Insert
     suspend fun insertAll(vararg countries: Country):List<Long>
 
+    @Insert
+    suspend fun insert(country: Country)
 
     @Query(value = "SELECT * FROM country")
     suspend fun getAllCountries():List<Country>
@@ -22,4 +24,10 @@ interface CountryDao {
 
     @Query(value = "DELETE FROM country")
     suspend fun deleteAllCountries()
+
+    @Query(value = "DELETE FROM country WHERE uuid = :countryId")
+    suspend fun deleteCountry(countryId:Int)
+
+    @Update
+    suspend fun updateCountry(country:Country)
 }
