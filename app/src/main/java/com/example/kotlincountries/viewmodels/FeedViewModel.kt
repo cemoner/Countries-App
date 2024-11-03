@@ -5,10 +5,12 @@ import android.app.Application
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.example.kotlincountries.model.entities.Country
 import com.example.kotlincountries.services.CountryAPIService
 import com.example.kotlincountries.services.CountryDatabase
+import com.example.kotlincountries.services.FirestoreCountryOperations
 import com.example.kotlincountries.util.CustomSharedPreferences
 import com.example.kotlincountries.view.fragments.FeedFragmentDirections
 import io.reactivex.disposables.CompositeDisposable
@@ -21,6 +23,7 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
     val countries = MutableLiveData<List<Country>>()
     val countryError = MutableLiveData<Boolean>()
     val countryLoading = MutableLiveData<Boolean>()
+    val db = FirestoreCountryOperations()
 
     private val api = CountryAPIService()
     private val disposable = CompositeDisposable()
@@ -28,13 +31,13 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
     private var refreshTime = 20 * 60 * 1000 * 1000 * 1000L
 
     fun refreshData() {
+        countryLoading.value = true
         val updateTime = customSharedPreferences.getTime()
         if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime){
-            getDataFromSQLite()
-
+            getDataFromFireStore()
         }
         else {
-            getDataFromAPI()
+            refreshFromAPI()
         }
     }
 
@@ -50,6 +53,7 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
                 override fun onSuccess(t: List<Country>) {
                     println("onSuccess Print Line")
                     storeInSQLite(t)
+                    storeInFirestore(t)
                     Toast.makeText(getApplication(),"Countries From API",Toast.LENGTH_LONG).show()
                 }
 
@@ -60,6 +64,39 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
                 }
             })
         )
+    }
+
+    private fun getDataFromFireStore() {
+        db.getAllCountries(
+            onSuccess = { countryList ->
+                viewModelScope.launch {
+                    countries.value = countryList
+                    countryError.value = false
+                    countryLoading.value = false
+                    Toast.makeText(getApplication(),"Countries From FireStore",Toast.LENGTH_LONG).show()
+                }
+            },
+            onFailure = { exception ->
+                viewModelScope.launch {
+                    countryError.value = true
+                    countryLoading.value = false
+                    println("Error loading countries: ${exception.message}")
+                }
+            }
+        )
+
+    }
+
+    private fun storeInFirestore(countries:List<Country>) {
+        launch {
+            countries.forEach {
+                db.addCountry(it,{
+                    println("Success adding country")
+                },{
+                    println("Error adding country: ${it.message}")
+                })
+            }
+        }
     }
 
     private fun showCountries(countryList:List<Country>){
@@ -103,12 +140,19 @@ class FeedViewModel(application: Application):BaseViewModel(application) {
     }
 
     @SuppressLint("CheckResult")
-    fun deleteCountry(id:Int) {
+    fun deleteCountry(countryName:String) {
         launch{
-            val db = CountryDatabase.getInstance(getApplication())
-            val dao = db.getCountryDao()
-            dao.deleteCountry(id)
-            refreshData()
+//            val db = CountryDatabase.getInstance(getApplication())
+//            val dao = db.getCountryDao()
+//            dao.deleteCountry(id)
+
+            db.deleteCountry(
+                countryName,
+                onSuccess = {
+                    Toast.makeText(getApplication(),"Country Deleted",Toast.LENGTH_LONG).show()
+                    refreshData()},
+                onFailure = {Toast.makeText(getApplication(),"Error Deleting Country",Toast.LENGTH_LONG).show()}
+            )
         }
     }
 

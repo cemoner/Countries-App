@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlincountries.R
 import com.example.kotlincountries.databinding.FragmentCountryBinding
+import com.example.kotlincountries.services.FirestoreCountryOperations
 import com.example.kotlincountries.util.downloadFromUrl
 import com.example.kotlincountries.util.placeHolderProgressBar
 import com.example.kotlincountries.viewmodels.CountryViewModel
@@ -19,8 +20,9 @@ import com.example.kotlincountries.viewmodels.CountryViewModel
 class CountryFragment : Fragment() {
 
     private lateinit var viewModel:CountryViewModel
-    private var countryID = 0
+    private var countryName = ""
     private lateinit var dataBinding : FragmentCountryBinding
+    val db = FirestoreCountryOperations()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +41,13 @@ class CountryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            countryID = CountryFragmentArgs.fromBundle(it).countryID
+            countryName = CountryFragmentArgs.fromBundle(it).countryName
         }
 
 
         viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         dataBinding.viewModel = viewModel
-        viewModel.getDataFromRoom(countryID)
-
+        viewModel.getDataFromFireStore(countryName)
         observeLiveData(view)
     }
 

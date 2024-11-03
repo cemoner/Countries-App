@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616996718158",
+    "project_id": "countries-app-62a8b",
+    "storage_bucket": "countries-app-62a8b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616996718158:android:640d36b96213b89207251f",
+        "android_client_info": {
+          "package_name": "com.example.kotlincountries"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaMgmGeuLitgZihpT4wQrdbQbOnR_W-PY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

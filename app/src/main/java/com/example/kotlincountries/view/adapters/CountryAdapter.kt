@@ -46,15 +46,17 @@ class CountryAdapter(val countryList:ArrayList<Country>,val viewModel: FeedViewM
     }
 
     override fun onCountryClicked(view: View,country: Country) {
-        val uuid = country.uuid
-        val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment(uuid)
-        Navigation.findNavController(view).navigate(action)
+        val name = country.countryName
+        val action = name?.let { FeedFragmentDirections.actionFeedFragmentToCountryFragment(it) }
+        if (action != null) {
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     override fun onDeleteClicked(view: View,country: Country) {
         val uuid = country.uuid
         Snackbar.make(view,"Do you want to delete ${country.countryName}?",Snackbar.LENGTH_LONG).setAction("Yes"){
-            viewModel.deleteCountry(uuid)
+            country.countryName?.let { it1 -> viewModel.deleteCountry(it1) }
             Snackbar.make(it,"Deletion is Succesful!",Snackbar.LENGTH_SHORT).show()
         }.show()
     }

@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.devtools.ksp") version "1.9.24-1.0.20"
     id("androidx.navigation.safeargs.kotlin")
+    id ("com.google.gms.google-services")
 }
 
 android {
@@ -63,4 +64,18 @@ dependencies {
     implementation (libs.rxJava2Adapter)
     implementation(libs.rxAndroid)
     implementation (libs.androidx.swiperefreshlayout)
+    implementation(platform(libs.firebase.bom))
+
+    implementation (libs.firebase.analytics)
+
+    implementation (libs.firebase.auth)
+
+    // Cloud Firestore (Optional)
+    implementation ("com.google.firebase:firebase-firestore")
+
+
+    // Cloud Storage (Optional)
+    implementation ("com.google.firebase:firebase-storage")
+
+
 }
